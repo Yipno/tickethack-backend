@@ -8,7 +8,8 @@ router.get("/", async (req, res) => {
   const trips = await Trip.find({
     $and: [{ departure }, { arrival }, { date }],
   });
-  res.json({ trips });
+  if (!trips[0]) res.json({ result: false });
+  else res.json({ trips });
 });
 
 module.exports = router;
