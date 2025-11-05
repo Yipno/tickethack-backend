@@ -23,12 +23,26 @@ router.get("/", async (req, res) => {
     if (cart.length === 0) {
       res.json({ result: false, message: "Cart empty" });
     } else {
-      console.log(cart);
       res.json({ result: true, cart });
     }
   } catch (err) {
     console.error(err);
     res.status(500).json({ result: false, error: "database non connectée" });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const data = await Cart.deleteOne({ _id: id });
+    if (data.deletedCount > 0) {
+      res.json({ result: true, data, message: "success" });
+    } else {
+      res.json({ result: false, data, error: "id not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ result: false, error: "Probleme serveur" });
   }
 });
 
