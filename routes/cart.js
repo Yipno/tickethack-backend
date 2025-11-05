@@ -46,4 +46,14 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.delete("/", async (req, res) => {
+  try {
+    const data = await Cart.deleteMany();
+    res.json({ result: true, data });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ result: false });
+  }
+});
+
 module.exports = router;
